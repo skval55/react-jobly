@@ -1,5 +1,26 @@
-.App {
+#root {
+  min-height: fit-content;
+}
+
+body {
   text-align: center;
+  min-height: 100vh;
+  height: fit-content;
+  background-image: url('../img/jobly-background-img.jpg');
+  background-size: cover; 
+  background-position: center;
+  background-attachment: fixed;
+
+}
+
+.layer {
+  background-color: rgba(100, 100, 100, 0.50);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-attachment: fixed;
 }
 
 .App-logo {
@@ -36,3 +57,4 @@
     transform: rotate(360deg);
   }
 }
+

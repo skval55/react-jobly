@@ -1,0 +1,12 @@
+.companies {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+  margin-top: 6em;
+  margin-bottom: 2em;
+}
+
+.rat {
+    background-color: rgb(225, 225, 225);
+}
