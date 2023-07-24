@@ -12,7 +12,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material/styles";
@@ -45,25 +45,23 @@ const NavBar = () => {
   const loggedInNav = () => {
     return (
       <>
-        <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            gap: 2,
+            margin: "1em",
+            display: { xs: "flex", md: "flex" },
+          }}
+        >
           {pages.map((page) => (
-            // <Button
-            //   key={page}
-            //   href={`/${page.toLowerCase()}`}
-            //   sx={{ my: 2, color: "white", display: "block" }}
-            // >
-            //   {page}
-            // </Button>
-            <Link to={`/${page}`}>{page}</Link>
+            <Link className="NavBar-pages" to={`/${page}`}>
+              {page}
+            </Link>
           ))}
         </Box>
-        <Typography
-          textAlign="center"
-          color="secondary"
-          sx={{ fontWeight: 700 }}
-        >
-          Log Out
-        </Typography>
+        <Link className="NavBar-auth logout" to={`/signup`}>
+          Log out
+        </Link>
       </>
     );
   };
@@ -71,23 +69,13 @@ const NavBar = () => {
   const loggedOutNav = () => {
     return (
       <div className="loggedOutNav">
-        <Typography
-          textAlign="center"
-          component="a"
-          href="/login"
-          sx={{ fontWeight: 700, color: "inherit", textDecoration: "none" }}
-        >
-          Log In
-        </Typography>
-        <Typography
-          component="a"
-          href="/signup"
-          textAlign="center"
-          color="secondary"
-          sx={{ fontWeight: 700, textDecoration: "none" }}
-        >
+        <Link className="NavBar-auth login" to={`/login`}>
+          Log in
+        </Link>
+
+        <Link className="NavBar-auth signup" to={`/signup`}>
           Sign up
-        </Typography>
+        </Link>
       </div>
     );
   };
@@ -101,26 +89,12 @@ const NavBar = () => {
               {/* <MenuItem className="menuItems"> */}
               <div className="menuItems">
                 {loggedIn ? null : <div className="otherSide"></div>}
-                <Typography
-                  variant="h4"
-                  noWrap
-                  component="a"
-                  href="/"
-                  sx={{
-                    mr: 2,
-                    display: { xs: "flex", md: "flex" },
 
-                    fontWeight: 400,
-                    letterSpacing: ".3rem",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
+                <Link className="NavBar-title" to={`/`}>
                   Jobly
-                </Typography>
+                </Link>
                 {loggedIn ? loggedInNav() : loggedOutNav()}
               </div>
-              {/* </MenuItem> */}
             </Toolbar>
           </Container>
         </AppBar>

@@ -5,3 +5,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.change-form{
+    font-size: small;
+    text-decoration: none;
+    color: grey;
+}
+
+.change-form:hover {
+    color: black;
+}

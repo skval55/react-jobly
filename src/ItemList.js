@@ -29,7 +29,8 @@ const ItemList = ({ jobsOrCompanies }) => {
     };
 
     fetchData();
-  }, []);
+    console.log("DATA FETCHED!!");
+  }, [jobsOrCompanies]);
 
   const companies = () => {
     return (

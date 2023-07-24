@@ -28,3 +28,29 @@ width: 100%;
 .container {
     text-align: center;
 }
+
+.NavBar-title {
+    text-decoration: none;
+    font-size: xxx-large;
+    color: white;
+    font-weight: 300;
+}
+.NavBar-pages {
+    text-decoration: none;
+    font-size: large;
+    color: white;
+    font-weight: 300;
+}
+.NavBar-auth {
+    text-decoration: none;
+    font-size: large;
+    color: white;
+    font-weight: 300;
+}
+.signup, .logout {
+    /* font-weight: 600; */
+    color: #ff3366;
+}
+.NavBar-auth:hover {
+    font-weight: 500;
+}

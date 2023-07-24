@@ -41,7 +41,9 @@ const LogIn = () => {
         <br />
         <Button color="secondary">Log In</Button>
         <br />
-        <Link to="/signup">No account? Sign up here</Link>
+        <Link className="change-form" to="/signup">
+          No account? Sign up here
+        </Link>
       </CardContent>
     </React.Fragment>
   );

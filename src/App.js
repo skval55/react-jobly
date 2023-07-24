@@ -13,9 +13,8 @@ function App() {
   return (
     <div className="App">
       <div className="layer">
-        <NavBar />
-
         <BrowserRouter>
+          <NavBar />
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path="/login" element={<LogIn />} />
