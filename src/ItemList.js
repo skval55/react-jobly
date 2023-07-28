@@ -16,6 +16,7 @@ import "./CompanyList.css";
 import TokenContext from "./TokenContext";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { Typography } from "@mui/material/";
 
 const ItemList = ({ jobsOrCompanies }) => {
   const navigate = useNavigate();
@@ -69,11 +70,32 @@ const ItemList = ({ jobsOrCompanies }) => {
     return (
       <>
         <SearchBar searchItems={searchItems} companyOrJob="Company" />
-        {searched
-          ? searched.map((item) => (
+        {searched ? (
+          searched.length > 0 ? (
+            searched.map((item) => (
               <CompanyCard key={item.handle} item={item} />
             ))
-          : items.map((item) => <CompanyCard key={item.handle} item={item} />)}
+          ) : (
+            <Typography
+              variant="h4"
+              noWrap
+              component="h4"
+              sx={{
+                mr: 2,
+                display: { xs: "relative", md: "relative" },
+
+                fontWeight: 400,
+                letterSpacing: ".3rem",
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              No search results
+            </Typography>
+          )
+        ) : (
+          items.map((item) => <CompanyCard key={item.handle} item={item} />)
+        )}
       </>
     );
   };
@@ -82,9 +104,30 @@ const ItemList = ({ jobsOrCompanies }) => {
       <>
         <SearchBar searchItems={searchItems} companyOrJob="Job" />
 
-        {searched
-          ? searched.map((item) => <JobCard key={item.handle} item={item} />)
-          : items.map((item) => <JobCard key={item.handle} item={item} />)}
+        {searched ? (
+          searched.length > 0 ? (
+            searched.map((item) => <JobCard key={item.handle} item={item} />)
+          ) : (
+            <Typography
+              variant="h4"
+              noWrap
+              component="h4"
+              sx={{
+                mr: 2,
+                display: { xs: "relative", md: "relative" },
+
+                fontWeight: 400,
+                letterSpacing: ".3rem",
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              No search results
+            </Typography>
+          )
+        ) : (
+          items.map((item) => <JobCard key={item.handle} item={item} />)
+        )}
       </>
     );
   };
