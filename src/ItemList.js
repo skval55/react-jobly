@@ -9,13 +9,46 @@
  *  */
 
 import JoblyApi from "./api";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import CompanyCard from "./CompanyCard";
 import JobCard from "./JobCard";
 import "./CompanyList.css";
+import TokenContext from "./TokenContext";
+import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const ItemList = ({ jobsOrCompanies }) => {
+  const navigate = useNavigate();
+  const token = useContext(TokenContext);
+  if (token !== null) {
+    console.log("logged in");
+  } else {
+    console.log("logged out");
+    navigate("/login");
+  }
+
   const [items, setItems] = useState([]);
+  const [searched, setSearched] = useState(null);
+
+  const searchItems = (searchTerm) => {
+    console.log(items);
+    const searchedItems = items.filter((item) => {
+      // console.log(typeof searchTerm.searchTerm);
+      // console.log(typeof item.name);
+      // return item.name.toLowerCase().includes(searchTerm.searchTerm);
+      if (item.title) {
+        return item.title
+          .toLowerCase()
+          .includes(searchTerm.searchTerm.toLowerCase());
+      } else if (item.name) {
+        return item.name
+          .toLowerCase()
+          .includes(searchTerm.searchTerm.toLowerCase());
+      }
+    });
+    console.log(searchedItems);
+    setSearched(searchedItems);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,18 +68,23 @@ const ItemList = ({ jobsOrCompanies }) => {
   const companies = () => {
     return (
       <>
-        {items.map((item) => (
-          <CompanyCard key={item.handle} item={item} />
-        ))}
+        <SearchBar searchItems={searchItems} companyOrJob="Company" />
+        {searched
+          ? searched.map((item) => (
+              <CompanyCard key={item.handle} item={item} />
+            ))
+          : items.map((item) => <CompanyCard key={item.handle} item={item} />)}
       </>
     );
   };
   const jobs = () => {
     return (
       <>
-        {items.map((item) => (
-          <JobCard key={item.handle} item={item} />
-        ))}
+        <SearchBar searchItems={searchItems} companyOrJob="Job" />
+
+        {searched
+          ? searched.map((item) => <JobCard key={item.handle} item={item} />)
+          : items.map((item) => <JobCard key={item.handle} item={item} />)}
       </>
     );
   };

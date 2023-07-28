@@ -48,14 +48,14 @@ class JoblyApi {
     let res = await this.request(`jobs`);
     return res;
   }
-  // static async login() {
-  //   let res = await this.request(`auth/token`, data, "post");
-  //   return res;
-  // }
-  // static async signUp() {
-  //   let res = await this.request(`auth/register`, data, "post");
-  //   return res;
-  // }
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res;
+  }
+  static async signUp(data) {
+    let res = await this.request(`auth/register`, data, "post");
+    return res;
+  }
   // static async apply(username, id) {
   //   let res = await this.request(`users/${username}/jobs/${id}`, data, "post");
   //   return res;

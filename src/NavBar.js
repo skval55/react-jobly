@@ -5,17 +5,18 @@
  * link to companies, jobs, profile, logout
  */
 
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 // import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
-// import Button from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material/styles";
+import TokenContext from "./TokenContext";
 
 import "./NavBar.css";
 
@@ -39,9 +40,23 @@ const theme = createTheme({
 });
 
 const pages = ["Companies", "Jobs"];
-const loggedIn = true;
 
-const NavBar = () => {
+const NavBar = ({ logOut }) => {
+  const navigate = useNavigate();
+  const token = useContext(TokenContext);
+  let loggedIn = true;
+  if (token === null) {
+    loggedIn = false;
+  } else {
+    loggedIn = true;
+  }
+
+  const logOutAndNav = () => {
+    logOut();
+    console.log("done");
+    navigate("/");
+  };
+
   const loggedInNav = () => {
     return (
       <>
@@ -59,7 +74,11 @@ const NavBar = () => {
             </Link>
           ))}
         </Box>
-        <Link className="NavBar-auth logout" to={`/signup`}>
+        <Link
+          className="NavBar-auth logout"
+          onClick={() => logOutAndNav()}
+          to="/"
+        >
           Log out
         </Link>
       </>

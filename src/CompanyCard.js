@@ -13,7 +13,9 @@ import {
   Typography,
   createTheme,
   ThemeProvider,
+  Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   status: {
@@ -35,20 +37,21 @@ const theme = createTheme({
 });
 
 const CompanyCard = ({ item }) => {
+  const navigate = useNavigate();
   const company = item;
 
   const card = (
     <React.Fragment>
       <CardContent>
-        <Typography
-          variant="h5"
-          component="a"
-          href={`/companies/${company.handle}`}
+        <Button
+          size="large"
+          variant="text"
+          onClick={() => navigate(`/companies/${company.handle}`)}
           color="secondary"
-          sx={{ textDecoration: "none" }}
+          sx={{ textDecoration: "none", fontSize: "1.25em" }}
         >
           {company.name}
-        </Typography>
+        </Button>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Employees: {company.numEmployees}
         </Typography>

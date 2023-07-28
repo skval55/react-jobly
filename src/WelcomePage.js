@@ -3,13 +3,13 @@
  *
  */
 
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Typography, ThemeProvider } from "@mui/material/";
 import { createTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import TokenContext from "./TokenContext";
 
 import "./WelcomePage.css";
-
-const loggedIn = false;
 
 const theme = createTheme({
   status: {
@@ -31,10 +31,29 @@ const theme = createTheme({
 });
 
 const WelcomePage = () => {
+  const navigate = useNavigate();
+  const token = useContext(TokenContext);
+  let loggedIn = true;
+  if (token === null) {
+    loggedIn = false;
+  } else {
+    loggedIn = true;
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate("/signup");
+  };
+
   const loggedOutPage = () => {
     return (
       <>
-        <Button variant="contained" color="secondary" size="large">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={(e) => handleClick(e)}
+        >
           register{" "}
         </Button>
         <p>Enjoy the experience</p>
@@ -42,6 +61,8 @@ const WelcomePage = () => {
     );
   };
   const loggedInPage = () => {
+    let username = localStorage.getItem("username");
+    username = username.charAt(0).toUpperCase() + username.slice(1);
     return (
       <Typography
         variant="h4"
@@ -57,7 +78,7 @@ const WelcomePage = () => {
           textDecoration: "none",
         }}
       >
-        Welcome Back user
+        Welcome Back {username}
       </Typography>
     );
   };

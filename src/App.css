@@ -6,21 +6,19 @@ body {
   text-align: center;
   min-height: 100vh;
   height: fit-content;
-  background-image: url('../img/jobly-background-img.jpg');
+  background-image: url('./img/jobly-background-img.jpg');
   background-size: cover; 
-  background-position: center;
   background-attachment: fixed;
-
+  background-position: center;
+  
 }
 
 .layer {
   background-color: rgba(100, 100, 100, 0.50);
   position: absolute;
-  top: 0;
-  left: 0;
+  min-height: 100vh;
   width: 100%;
-  height: 100vh;
-  background-attachment: fixed;
+  height: fit-content;
 }
 
 .App-logo {

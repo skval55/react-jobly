@@ -10,6 +10,7 @@ import {
   Typography,
   createTheme,
   ThemeProvider,
+  Button,
 } from "@mui/material";
 
 const theme = createTheme({
@@ -41,7 +42,10 @@ const JobCard = ({ item }) => {
           variant="h5"
           component="a"
           color="secondary"
-          sx={{ textDecoration: "none" }}
+          sx={{
+            textDecoration: "none",
+            fontSize: "1.5em",
+          }}
         >
           {job.title}
         </Typography>
@@ -61,6 +65,10 @@ const JobCard = ({ item }) => {
         <Typography component="span" sx={{ ml: 1.5 }} color="text.secondary">
           Equity: {job.equity ? job.equity : "0"}
         </Typography>
+        <br />
+        <Button variant="outlined" color="secondary">
+          APPLY
+        </Button>
       </CardContent>
     </React.Fragment>
   );
