@@ -12,6 +12,7 @@ import {
   ThemeProvider,
   Button,
 } from "@mui/material";
+import JoblyApi from "./api";
 
 const theme = createTheme({
   status: {
@@ -32,8 +33,16 @@ const theme = createTheme({
   },
 });
 
-const JobCard = ({ item }) => {
+const JobCard = ({ item, jobsApplied }) => {
+  console.log(item.id);
+  console.log(jobsApplied);
   const job = item;
+
+  const apply = async () => {
+    const username = localStorage.getItem("username");
+    const data = await JoblyApi.apply(username, item.id);
+    console.log(data);
+  };
 
   const card = (
     <React.Fragment>
@@ -66,8 +75,13 @@ const JobCard = ({ item }) => {
           Equity: {job.equity ? job.equity : "0"}
         </Typography>
         <br />
-        <Button variant="outlined" color="secondary">
-          APPLY
+        <Button
+          disabled={jobsApplied.includes(job.id) ? true : false}
+          variant="outlined"
+          color="secondary"
+          onClick={() => apply(job.id)}
+        >
+          {jobsApplied.includes(job.id) ? " APPLIED " : "APPLY"}
         </Button>
       </CardContent>
     </React.Fragment>

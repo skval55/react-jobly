@@ -41,7 +41,7 @@ const theme = createTheme({
 
 const pages = ["Companies", "Jobs"];
 
-const NavBar = ({ logOut }) => {
+const NavBar = ({ logOut, username }) => {
   const navigate = useNavigate();
   const token = useContext(TokenContext);
   let loggedIn = true;
@@ -74,12 +74,15 @@ const NavBar = ({ logOut }) => {
             </Link>
           ))}
         </Box>
+        <Link className="NavBar-auth logout" to="/profile">
+          Profile
+        </Link>
         <Link
           className="NavBar-auth logout"
           onClick={() => logOutAndNav()}
           to="/"
         >
-          Log out
+          Log out {username}
         </Link>
       </>
     );

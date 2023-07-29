@@ -46,6 +46,7 @@ width: 100%;
     font-size: large;
     color: white;
     font-weight: 300;
+    margin-left: 1em;
 }
 .signup, .logout {
     /* font-weight: 600; */

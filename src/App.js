@@ -1,5 +1,5 @@
 // import logo from "./logo.svg";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, json } from "react-router-dom";
 import "./App.css";
 import NavBar from "./NavBar";
 import WelcomePage from "./WelcomePage";
@@ -9,14 +9,47 @@ import UserInfoPage from "./UserInfoPage";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import JoblyApi from "./api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TokenContext from "./TokenContext";
 
 function App() {
   const [userToken, setUserToken] = useState(localStorage.getItem("token"));
   const [username, setUsername] = useState(localStorage.getItem("username"));
-  const updateToken = (token) => {
-    setUserToken(token);
+  const [jobs, setJobs] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("userInfo"))
+  );
+
+  const [jobsApplied, setJobsApplied] = useState([]);
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setJobsApplied(userInfo.user.applications);
+  }, []);
+
+  const fetchUserData = async () => {
+    const data = await JoblyApi.getUser(username);
+    setUserInfo(data);
+    const userInfoJson = JSON.stringify(data);
+    localStorage.setItem("userInfo", userInfoJson);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const companiesData = await JoblyApi.getCompanys();
+      setCompanies(companiesData.companies);
+      const jobsData = await JoblyApi.getJobs();
+      setJobs(jobsData.jobs);
+    };
+
+    fetchData();
+  }, []);
+
+  const updateUser = async (data) => {
+    const response = await JoblyApi.updateUser(username, data);
+    setUserInfo(response);
+    fetchUserData();
   };
 
   const login = async (data) => {
@@ -25,44 +58,53 @@ function App() {
     setUsername(data.username);
     localStorage.setItem("token", token.token);
     localStorage.setItem("username", data.username);
-    console.log(userToken);
-    console.log("************usertoken**************");
+    fetchUserData();
   };
   const signUp = (data) => {
     const token = JoblyApi.signUp(data);
     setUserToken(token.token);
     setUsername(data.username);
     localStorage.setItem("token", token.token);
-    localStorage.setItem("usename", data.username);
-    console.log(userToken);
-    console.log("************newusertoken**************");
+    localStorage.setItem("username", data.username);
+    fetchUserData();
   };
   const logOut = () => {
     setUserToken(null);
     localStorage.clear();
-    console.log(userToken);
-    console.log("**************logoutuser**************");
   };
   return (
     <div className="App">
       <div className="layer">
         <BrowserRouter>
           <TokenContext.Provider value={userToken}>
-            <NavBar logOut={logOut} />
+            <NavBar logOut={logOut} username={username} />
             <Routes>
               <Route path="/" element={<WelcomePage />} />
               <Route path="/login" element={<LogIn login={login} />} />
               <Route path="/signup" element={<SignUp signUp={signUp} />} />
               <Route
                 path="/companies"
-                element={<ItemList jobsOrCompanies="companies" />}
+                element={
+                  <ItemList jobsOrCompanies="companies" items={companies} />
+                }
               />
               <Route
                 path="/jobs"
-                element={<ItemList jobsOrCompanies="jobs" />}
+                element={
+                  <ItemList
+                    jobsOrCompanies="jobs"
+                    items={jobs}
+                    jobsApplied={jobsApplied}
+                  />
+                }
               />
               <Route path="/companies/:handle" element={<CompanyPage />} />
-              {/* <Route path="/profile" element={<UserInfoPage />} /> */}
+              <Route
+                path="/profile"
+                element={
+                  <UserInfoPage userInfo={userInfo} updateUser={updateUser} />
+                }
+              />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </TokenContext.Provider>

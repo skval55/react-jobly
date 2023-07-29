@@ -18,7 +18,9 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { Typography } from "@mui/material/";
 
-const ItemList = ({ jobsOrCompanies }) => {
+const ItemList = ({ jobsOrCompanies, items, jobsApplied }) => {
+  console.log(items);
+
   const navigate = useNavigate();
   const token = useContext(TokenContext);
   if (token !== null) {
@@ -28,15 +30,21 @@ const ItemList = ({ jobsOrCompanies }) => {
     navigate("/login");
   }
 
-  const [items, setItems] = useState([]);
   const [searched, setSearched] = useState(null);
+
+  // const apply = async (id) => {
+  //   const username = localStorage.getItem("username");
+  //   const data = await JoblyApi.apply(username, id);
+  //   console.log(data);
+  // };
+
+  useEffect(() => {
+    setSearched(null);
+  }, [items]);
 
   const searchItems = (searchTerm) => {
     console.log(items);
     const searchedItems = items.filter((item) => {
-      // console.log(typeof searchTerm.searchTerm);
-      // console.log(typeof item.name);
-      // return item.name.toLowerCase().includes(searchTerm.searchTerm);
       if (item.title) {
         return item.title
           .toLowerCase()
@@ -50,21 +58,6 @@ const ItemList = ({ jobsOrCompanies }) => {
     console.log(searchedItems);
     setSearched(searchedItems);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (jobsOrCompanies === "companies") {
-        const data = await JoblyApi.getCompanys();
-        setItems(data.companies);
-      } else {
-        const data = await JoblyApi.getJobs();
-        setItems(data.jobs);
-      }
-    };
-
-    fetchData();
-    console.log("DATA FETCHED!!");
-  }, [jobsOrCompanies]);
 
   const companies = () => {
     return (
@@ -106,7 +99,13 @@ const ItemList = ({ jobsOrCompanies }) => {
 
         {searched ? (
           searched.length > 0 ? (
-            searched.map((item) => <JobCard key={item.handle} item={item} />)
+            searched.map((item) => (
+              <JobCard
+                key={item.handle}
+                item={item}
+                jobsApplied={jobsApplied}
+              />
+            ))
           ) : (
             <Typography
               variant="h4"
@@ -126,7 +125,9 @@ const ItemList = ({ jobsOrCompanies }) => {
             </Typography>
           )
         ) : (
-          items.map((item) => <JobCard key={item.handle} item={item} />)
+          items.map((item) => (
+            <JobCard key={item.handle} item={item} jobsApplied={jobsApplied} />
+          ))
         )}
       </>
     );

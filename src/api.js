@@ -56,10 +56,18 @@ class JoblyApi {
     let res = await this.request(`auth/register`, data, "post");
     return res;
   }
-  // static async apply(username, id) {
-  //   let res = await this.request(`users/${username}/jobs/${id}`, data, "post");
-  //   return res;
-  // }
+  static async apply(username, id) {
+    let res = await this.request(`users/${username}/jobs/${id}`, {}, "post");
+    return res;
+  }
+  static async getUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res;
+  }
+  static async updateUser(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res;
+  }
 
   // obviously, you'll add a lot here ... companies, jobs, apply for jobs, login, edit user, jobs associated to company
 }
