@@ -8,7 +8,6 @@
  * option as well to make general list component to use for jobs as well.
  *  */
 
-import JoblyApi from "./api";
 import React, { useEffect, useState, useContext } from "react";
 import CompanyCard from "./CompanyCard";
 import JobCard from "./JobCard";
@@ -18,32 +17,29 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { Typography } from "@mui/material/";
 
-const ItemList = ({ jobsOrCompanies, items, jobsApplied }) => {
-  console.log(items);
-
+const ItemList = ({ jobsOrCompanies, items }) => {
   const navigate = useNavigate();
   const token = useContext(TokenContext);
   if (token !== null) {
-    console.log("logged in");
   } else {
-    console.log("logged out");
     navigate("/login");
   }
 
   const [searched, setSearched] = useState(null);
 
-  // const apply = async (id) => {
-  //   const username = localStorage.getItem("username");
-  //   const data = await JoblyApi.apply(username, id);
-  //   console.log(data);
-  // };
+  const [jobsApplied, setJobsApplied] = useState([]);
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo);
+    setJobsApplied(userInfo.user.applications);
+  }, []);
 
   useEffect(() => {
     setSearched(null);
   }, [items]);
 
   const searchItems = (searchTerm) => {
-    console.log(items);
     const searchedItems = items.filter((item) => {
       if (item.title) {
         return item.title
@@ -55,7 +51,7 @@ const ItemList = ({ jobsOrCompanies, items, jobsApplied }) => {
           .includes(searchTerm.searchTerm.toLowerCase());
       }
     });
-    console.log(searchedItems);
+
     setSearched(searchedItems);
   };
 

@@ -6,32 +6,11 @@ import {
   CardContent,
   Typography,
   TextField,
-  createTheme,
-  ThemeProvider,
   Button,
 } from "@mui/material";
 import "./Forms.css";
 import logo from "./img/jobly-logo.png";
 import TokenContext from "./TokenContext";
-
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#28282a",
-      darker: "#28282a",
-    },
-    secondary: {
-      main: "#ff3366",
-    },
-    neutral: {
-      main: "#fff",
-      contrastText: "#fff",
-    },
-  },
-});
 
 const LogIn = ({ signUp }) => {
   const navigate = useNavigate();
@@ -50,7 +29,6 @@ const LogIn = ({ signUp }) => {
   const [formData, setFormData] = useState(INITIAL_STATE);
 
   const handleChange = (e) => {
-    console.log(e);
     let { id, value } = e.target;
     setFormData((formData) => ({
       ...formData,
@@ -143,19 +121,17 @@ const LogIn = ({ signUp }) => {
 
   return (
     <div className="Forms">
-      <ThemeProvider theme={theme}>
-        <Box sx={{ width: "50vw" }}>
-          <Card
-            variant="outlined"
-            sx={{
-              padding: "1.5em",
-              backgroundColor: "rgb(225, 225, 225)",
-            }}
-          >
-            {card}
-          </Card>
-        </Box>
-      </ThemeProvider>
+      <Box sx={{ width: "50vw" }}>
+        <Card
+          variant="outlined"
+          sx={{
+            padding: "1.5em",
+            backgroundColor: "rgb(225, 225, 225)",
+          }}
+        >
+          {card}
+        </Card>
+      </Box>
     </div>
   );
 };

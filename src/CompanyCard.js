@@ -17,25 +17,6 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#28282a",
-      darker: "#28282a",
-    },
-    secondary: {
-      main: "#ff3366",
-    },
-    neutral: {
-      main: "#fff",
-      contrastText: "#fff",
-    },
-  },
-});
-
 const CompanyCard = ({ item }) => {
   const navigate = useNavigate();
   const company = item;
@@ -61,13 +42,11 @@ const CompanyCard = ({ item }) => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ width: "60%" }}>
-        <Card variant="outlined" sx={{ backgroundColor: "rgb(225, 225, 225)" }}>
-          {card}
-        </Card>
-      </Box>
-    </ThemeProvider>
+    <Box sx={{ width: "60%" }}>
+      <Card variant="outlined" sx={{ backgroundColor: "rgb(225, 225, 225)" }}>
+        {card}
+      </Card>
+    </Box>
   );
 };
 

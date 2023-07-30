@@ -3,45 +3,15 @@
  * will have job detail on card and a button to apply for job
  */
 import React from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  createTheme,
-  ThemeProvider,
-  Button,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Button } from "@mui/material";
 import JoblyApi from "./api";
 
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#28282a",
-      darker: "#28282a",
-    },
-    secondary: {
-      main: "#ff3366",
-    },
-    neutral: {
-      main: "#fff",
-      contrastText: "#fff",
-    },
-  },
-});
-
 const JobCard = ({ item, jobsApplied }) => {
-  console.log(item.id);
-  console.log(jobsApplied);
   const job = item;
 
   const apply = async () => {
     const username = localStorage.getItem("username");
     const data = await JoblyApi.apply(username, item.id);
-    console.log(data);
   };
 
   const card = (
@@ -88,13 +58,11 @@ const JobCard = ({ item, jobsApplied }) => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ width: "60%" }}>
-        <Card variant="outlined" sx={{ backgroundColor: "rgb(225, 225, 225)" }}>
-          {card}
-        </Card>
-      </Box>
-    </ThemeProvider>
+    <Box sx={{ width: "60%" }}>
+      <Card variant="outlined" sx={{ backgroundColor: "rgb(225, 225, 225)" }}>
+        {card}
+      </Card>
+    </Box>
   );
 };
 

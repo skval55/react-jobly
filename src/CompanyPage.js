@@ -20,7 +20,6 @@ const CompanyPage = () => {
       setCompany(data);
     };
     fetchData();
-    console.log("data fetched");
   }, []);
 
   const jobs = () => {

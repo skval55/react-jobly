@@ -6,38 +6,14 @@
  */
 
 import React, { useContext } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
-// import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material/styles";
 import TokenContext from "./TokenContext";
 
 import "./NavBar.css";
-
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#28282a",
-      darker: "#053e85",
-    },
-    secondary: {
-      main: "#ff3366",
-    },
-    neutral: {
-      main: "#fff",
-      contrastText: "#fff",
-    },
-  },
-});
 
 const pages = ["Companies", "Jobs"];
 
@@ -53,7 +29,6 @@ const NavBar = ({ logOut, username }) => {
 
   const logOutAndNav = () => {
     logOut();
-    console.log("done");
     navigate("/");
   };
 
@@ -104,23 +79,21 @@ const NavBar = ({ logOut, username }) => {
 
   return (
     <div style={{ zIndex: 10, position: "absolute", top: 0, width: "100vw" }}>
-      <ThemeProvider theme={theme}>
-        <AppBar position="static" color="primary">
-          <Container maxWidth="xl" className="container">
-            <Toolbar disableGutters className="toolBar">
-              {/* <MenuItem className="menuItems"> */}
-              <div className="menuItems">
-                {loggedIn ? null : <div className="otherSide"></div>}
+      <AppBar position="static" color="primary">
+        <Container maxWidth="xl" className="container">
+          <Toolbar disableGutters className="toolBar">
+            {/* <MenuItem className="menuItems"> */}
+            <div className="menuItems">
+              {loggedIn ? null : <div className="otherSide"></div>}
 
-                <Link className="NavBar-title" to={`/`}>
-                  Jobly
-                </Link>
-                {loggedIn ? loggedInNav() : loggedOutNav()}
-              </div>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </ThemeProvider>
+              <Link className="NavBar-title" to={`/`}>
+                Jobly
+              </Link>
+              {loggedIn ? loggedInNav() : loggedOutNav()}
+            </div>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </div>
   );
 };
