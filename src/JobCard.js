@@ -2,16 +2,19 @@
  *
  * will have job detail on card and a button to apply for job
  */
-import React from "react";
+import React, { useState } from "react";
 import { Box, Card, CardContent, Typography, Button } from "@mui/material";
 import JoblyApi from "./api";
 
 const JobCard = ({ item, jobsApplied }) => {
   const job = item;
 
+  const [applied, setApplied] = useState(false);
+
   const apply = async () => {
     const username = localStorage.getItem("username");
     const data = await JoblyApi.apply(username, item.id);
+    setApplied(true);
   };
 
   const card = (
@@ -46,12 +49,12 @@ const JobCard = ({ item, jobsApplied }) => {
         </Typography>
         <br />
         <Button
-          disabled={jobsApplied.includes(job.id) ? true : false}
+          disabled={jobsApplied.includes(job.id) || applied ? true : false}
           variant="outlined"
           color="secondary"
           onClick={() => apply(job.id)}
         >
-          {jobsApplied.includes(job.id) ? " APPLIED " : "APPLY"}
+          {jobsApplied.includes(job.id) || applied ? " APPLIED " : "APPLY"}
         </Button>
       </CardContent>
     </React.Fragment>

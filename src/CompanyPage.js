@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import JobCard from "./JobCard";
 import "./CompanyPage.css";
 
-const CompanyPage = () => {
+const CompanyPage = ({ jobsApplied }) => {
   const [company, setCompany] = useState({});
   const { handle } = useParams();
 
@@ -27,7 +27,7 @@ const CompanyPage = () => {
       return (
         <>
           {company.jobs.map((job) => (
-            <JobCard key={job.handle} item={job} />
+            <JobCard key={job.handle} item={job} jobsApplied={jobsApplied} />
           ))}
         </>
       );

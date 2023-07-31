@@ -41,6 +41,15 @@ function App() {
     JSON.parse(localStorage.getItem("userInfo"))
   );
 
+  const [jobsApplied, setJobsApplied] = useState([]);
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo);
+    console.log("*********userinfo************");
+    setJobsApplied(userInfo.user.applications);
+  }, []);
+
   const fetchUserData = async () => {
     const data = await JoblyApi.getUser(username);
     setUserInfo(data);
@@ -104,9 +113,18 @@ function App() {
                 />
                 <Route
                   path="/jobs"
-                  element={<ItemList jobsOrCompanies="jobs" items={jobs} />}
+                  element={
+                    <ItemList
+                      jobsOrCompanies="jobs"
+                      items={jobs}
+                      jobsApplied={jobsApplied}
+                    />
+                  }
                 />
-                <Route path="/companies/:handle" element={<CompanyPage />} />
+                <Route
+                  path="/companies/:handle"
+                  element={<CompanyPage jobsApplied={jobsApplied} />}
+                />
                 <Route
                   path="/profile"
                   element={

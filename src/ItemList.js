@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { Typography } from "@mui/material/";
 
-const ItemList = ({ jobsOrCompanies, items }) => {
+const ItemList = ({ jobsOrCompanies, items, jobsApplied = [] }) => {
   const navigate = useNavigate();
   const token = useContext(TokenContext);
   if (token !== null) {
@@ -26,14 +26,6 @@ const ItemList = ({ jobsOrCompanies, items }) => {
   }
 
   const [searched, setSearched] = useState(null);
-
-  const [jobsApplied, setJobsApplied] = useState([]);
-
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(userInfo);
-    setJobsApplied(userInfo.user.applications);
-  }, []);
 
   useEffect(() => {
     setSearched(null);
