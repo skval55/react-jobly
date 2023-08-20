@@ -47,7 +47,9 @@ function App() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     console.log(userInfo);
     console.log("*********userinfo************");
-    setJobsApplied(userInfo.user.applications);
+    if (userInfo) {
+      setJobsApplied(userInfo.user.applications);
+    }
   }, []);
 
   const fetchUserData = async () => {
